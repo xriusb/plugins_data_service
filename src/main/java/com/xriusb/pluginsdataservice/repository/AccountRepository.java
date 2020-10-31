@@ -24,6 +24,6 @@ public class AccountRepository {
     }
 
     public Optional<Account> findByCode(String code) {
-        return accounts.stream().filter(account -> code.equals(account.getCode())).findFirst();
+        return accounts.stream().filter(account -> account.getCode().equals(code)).findFirst();
     }
 }
