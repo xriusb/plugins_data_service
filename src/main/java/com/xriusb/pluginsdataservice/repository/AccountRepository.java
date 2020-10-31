@@ -3,6 +3,7 @@ package com.xriusb.pluginsdataservice.repository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xriusb.pluginsdataservice.model.Account;
+import com.xriusb.pluginsdataservice.model.Device;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,5 +26,13 @@ public class AccountRepository {
 
     public Optional<Account> findByCode(String code) {
         return accounts.stream().filter(account -> account.getCode().equals(code)).findFirst();
+    }
+
+    public Optional<Device> findDevice(String accountCode, String deviceName) {
+        return accounts.stream()
+                .filter(account -> account.getCode().equals(accountCode))
+                .flatMap(account -> account.getDevices().stream())
+                .filter(device -> device.getName().equals(deviceName))
+                .findFirst();
     }
 }

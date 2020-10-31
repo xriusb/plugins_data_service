@@ -4,6 +4,7 @@ package com.xriusb.pluginsdataservice.api;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.xriusb.pluginsdataservice.model.Account;
+import com.xriusb.pluginsdataservice.model.Device;
 import com.xriusb.pluginsdataservice.model.HostResponse;
 import com.xriusb.pluginsdataservice.service.PluginsDataService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,12 @@ public class PluginsDataAPI {
                                                  @RequestParam String pluginVersion) throws IOException {
 
         Optional<Account> account = pluginsDataService.findAccount(accountCode);
-        if(!account.isPresent()) {
+        if(account.isEmpty()) {
+            return ResponseEntity.ok("");
+        }
+
+        Optional<Device> device = pluginsDataService.findDevice(accountCode, targetDevice);
+        if(device.isEmpty()) {
             return ResponseEntity.ok("");
         }
 
