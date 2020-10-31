@@ -5,12 +5,28 @@
       {
         "name": "XBox",
         "pluginVersion": "3.3.1",
-        "pingTime": 10
+        "pingTime": 10,
+        "cluster": [
+          {
+            "name": "clusterA.com",
+            "weight": 70
+          },
+          {
+            "name": "clusterB.com",
+            "weight": 30
+          }
+        ]
       },
       {
         "name": "Panasonic",
         "pluginVersion": "3.3.2",
-        "pingTime": 5
+        "pingTime": 5,
+        "cluster": [
+          {
+            "name": "clusterB.com",
+            "weight": 100
+          }
+        ]
       }
     ]
   },
@@ -20,7 +36,17 @@
       {
         "name": "osmf",
         "pluginVersion": "3.3.1",
-        "pingTime": 5
+        "pingTime": 5,
+        "cluster": [
+          {
+            "name": "clusterA.com",
+            "weight": 50
+          },
+          {
+            "name": "clusterB.com",
+            "weight": 50
+          }
+        ]
       }
     ]
   }

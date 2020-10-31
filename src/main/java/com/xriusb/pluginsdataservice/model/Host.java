@@ -4,14 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
-public class Device {
+public class Host {
     private String name;
-    private String pluginVersion;
-    private Integer pingTime;
-    private List<Host> cluster;
+    private Integer weight;
 }
