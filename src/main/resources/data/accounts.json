@@ -1,0 +1,27 @@
+[
+  {
+    "code": "clienteA",
+    "devices": [
+      {
+        "name": "XBox",
+        "pluginVersion": "3.3.1",
+        "pingTime": 10
+      },
+      {
+        "name": "Panasonic",
+        "pluginVersion": "3.3.2",
+        "pingTime": 5
+      }
+    ]
+  },
+  {
+    "code": "clienteB",
+    "devices": [
+      {
+        "name": "osmf",
+        "pluginVersion": "3.3.1",
+        "pingTime": 5
+      }
+    ]
+  }
+]
