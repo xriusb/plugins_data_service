@@ -21,7 +21,4 @@ public class PluginsDataService {
     public Optional<Device> findDevice(String accountCode, String deviceName) {
         return accountRepository.findDevice(accountCode, deviceName);
     }
-
-
-
 }

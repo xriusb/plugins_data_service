@@ -35,7 +35,7 @@ public class PluginsDataAPI {
         }
 
         Optional<Device> device = pluginsDataService.findDevice(accountCode, targetDevice);
-        if(device.isEmpty()) {
+        if(device.isEmpty() || !device.get().getPluginVersion().equals(pluginVersion)) {
             return ResponseEntity.ok("");
         }
 
