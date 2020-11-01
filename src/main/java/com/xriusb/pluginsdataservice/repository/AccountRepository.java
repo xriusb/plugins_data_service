@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xriusb.pluginsdataservice.model.Account;
 import com.xriusb.pluginsdataservice.model.Device;
 import com.xriusb.pluginsdataservice.service.loadbalancer.WeightedLoadBalancer;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public class AccountRepository {
 
     private List<Account> accounts;
@@ -23,8 +23,7 @@ public class AccountRepository {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<Account>> typeReference = new TypeReference<>(){};
         accounts = mapper.readValue(new File("src/main/resources/data/accounts.json"), typeReference);
-        accounts.forEach(account -> account.getDevices()
-                .forEach(device -> device.setLoadBalancer(new WeightedLoadBalancer(device.getCluster()))));
+        setDevicesLoadBalancers();
     }
 
     public Optional<Account> findByCode(String code) {
@@ -37,5 +36,10 @@ public class AccountRepository {
                 .flatMap(account -> account.getDevices().stream())
                 .filter(device -> device.getName().equals(deviceName))
                 .findFirst();
+    }
+
+    private void setDevicesLoadBalancers() {
+        accounts.forEach(account -> account.getDevices()
+                .forEach(device -> device.setLoadBalancer(new WeightedLoadBalancer(device.getCluster()))));
     }
 }

@@ -5,9 +5,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.xriusb.pluginsdataservice.model.Account;
 import com.xriusb.pluginsdataservice.model.Device;
-import com.xriusb.pluginsdataservice.model.HostResponse;
 import com.xriusb.pluginsdataservice.service.PluginsDataService;
-import com.xriusb.pluginsdataservice.service.viewcode.ViewCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +23,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PluginsDataAPI {
     private final PluginsDataService pluginsDataService;
-    private final ViewCode<String> alphanumericViewCode;
     private final XmlMapper xmlMapper = new XmlMapper();
 
     @PostConstruct
@@ -48,12 +45,6 @@ public class PluginsDataAPI {
             return ResponseEntity.ok("");
         }
 
-        HostResponse response = HostResponse.builder()
-                .hostName(device.get().getLoadBalancer().getHost())
-                .pingTime(device.get().getPingTime())
-                .viewCode(alphanumericViewCode.generate())
-                .build();
-
-        return ResponseEntity.ok(xmlMapper.writeValueAsString(response));
+        return ResponseEntity.ok(xmlMapper.writeValueAsString(pluginsDataService.getHostResponse(device.get())));
     }
 }
