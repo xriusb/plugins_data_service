@@ -1,5 +1,6 @@
 package com.xriusb.pluginsdataservice.model;
 
+import com.xriusb.pluginsdataservice.service.loadbalancer.LoadBalancer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,5 @@ public class Device {
     private String pluginVersion;
     private Integer pingTime;
     private List<Host> cluster;
+    private LoadBalancer loadBalancer;
 }
