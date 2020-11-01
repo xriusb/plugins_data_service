@@ -38,6 +38,12 @@ public class AccountRepository {
                 .findFirst();
     }
 
+    public List<Account> saveAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+        setDevicesLoadBalancers();
+        return this.accounts;
+    }
+
     private void setDevicesLoadBalancers() {
         accounts.forEach(account -> account.getDevices()
                 .forEach(device -> device.setLoadBalancer(new WeightedLoadBalancer(device.getCluster()))));

@@ -9,13 +9,11 @@ import com.xriusb.pluginsdataservice.service.PluginsDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -46,5 +44,10 @@ public class PluginsDataAPI {
         }
 
         return ResponseEntity.ok(xmlMapper.writeValueAsString(pluginsDataService.getHostResponse(device.get())));
+    }
+
+    @PostMapping("/accounts")
+    public ResponseEntity createAccounts(@RequestBody List<Account> accounts) {
+        return ResponseEntity.ok(pluginsDataService.save(accounts));
     }
 }

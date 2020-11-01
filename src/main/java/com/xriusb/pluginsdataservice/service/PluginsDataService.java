@@ -8,6 +8,7 @@ import com.xriusb.pluginsdataservice.service.viewcode.ViewCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,9 @@ public class PluginsDataService {
                 .pingTime(device.getPingTime())
                 .viewCode(alphanumericViewCode.generate())
                 .build();
+    }
+
+    public List<Account> save(List<Account> accounts) {
+        return accountRepository.saveAccounts(accounts);
     }
 }
