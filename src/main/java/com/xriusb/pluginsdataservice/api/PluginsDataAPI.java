@@ -1,6 +1,5 @@
 package com.xriusb.pluginsdataservice.api;
 
-
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.xriusb.pluginsdataservice.model.Account;
