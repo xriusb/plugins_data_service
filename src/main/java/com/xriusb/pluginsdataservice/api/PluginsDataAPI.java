@@ -7,6 +7,7 @@ import com.xriusb.pluginsdataservice.model.Account;
 import com.xriusb.pluginsdataservice.model.Device;
 import com.xriusb.pluginsdataservice.model.HostResponse;
 import com.xriusb.pluginsdataservice.service.PluginsDataService;
+import com.xriusb.pluginsdataservice.service.viewcode.ViewCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -23,6 +25,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PluginsDataAPI {
     private final PluginsDataService pluginsDataService;
+    private final ViewCode<String> alphanumericViewCode;
+    private final XmlMapper xmlMapper = new XmlMapper();
+
+    @PostConstruct
+    private void setUpXMLMapper() {
+        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+    }
 
     @GetMapping(value="/getData", produces= MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<String> getPluginsData(@RequestParam String accountCode,
@@ -39,10 +48,12 @@ public class PluginsDataAPI {
             return ResponseEntity.ok("");
         }
 
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
-        String xml = xmlMapper.writeValueAsString(HostResponse.builder().hostName("foo").pingTime(2).viewCode("baa").build());
+        HostResponse response = HostResponse.builder()
+                .hostName(device.get().getLoadBalancer().getHost())
+                .pingTime(device.get().getPingTime())
+                .viewCode(alphanumericViewCode.generate())
+                .build();
 
-        return ResponseEntity.ok(xml);
+        return ResponseEntity.ok(xmlMapper.writeValueAsString(response));
     }
 }
