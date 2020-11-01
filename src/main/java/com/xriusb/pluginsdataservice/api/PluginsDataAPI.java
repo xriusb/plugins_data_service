@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/dataService.com")
+@RequestMapping
 @RequiredArgsConstructor
 public class PluginsDataAPI {
     private final PluginsDataService pluginsDataService;
