@@ -22,11 +22,6 @@ public class WeightedLoadBalancer implements LoadBalancer{
     }
 
     @Override
-    public void setCluster(List<String> hosts) {
-
-    }
-
-    @Override
     public String getHost() {
         Integer randomValue = random.nextInt(total);
         return clusterWeightMap.higherEntry(randomValue).getValue();
